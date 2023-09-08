@@ -1,7 +1,7 @@
 {
   "name": "playwright-learn-codespaces",
   "version": "1.0.0",
-  "description": "A Playwright-enabled Codespaces repo with a basic application and test harness in place. Useful for workshops and as starter template.",
+  "description": "A Playwright-enabled Codespaces repo.",
   "main": "index.js",
   "scripts": {},
   "keywords": [],
