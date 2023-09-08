@@ -5,3 +5,8 @@ node_modules/
 */*/test-results/
 */*/test-reports/
 /playwright/.cache/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+.env.local
+/e2e-reports/

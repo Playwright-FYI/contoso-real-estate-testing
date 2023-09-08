@@ -1,7 +1,7 @@
 {
-  "name": "Playwright-Learn-Nextjs",
+  "name": "Testing Contoso With Playwright",
 
-	"image": "mcr.microsoft.com/playwright:v1.38.0-jammy",
+	"image": "mcr.microsoft.com/playwright:v1.37.0-jammy",
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {
 			"nodeGypDependencies": true,
@@ -21,10 +21,10 @@
   },
 
   "waitFor": "onCreateCommand",
-  "updateContentCommand": "npm install",
+  "updateContentCommand": "",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postAttachCommand": {
-    "server": "npx playwright test"
+    "server": ""
   },
 
   "customizations": {
