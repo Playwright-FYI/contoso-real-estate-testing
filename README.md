@@ -222,4 +222,75 @@ $ npx playwright test --grep "(?=.*@core)(?=.*@speedy)"
 Running 1 test using 1 worker
 ```
 
-That's a crash course on Playwright Test Specification writing. Now let's write the tests for Contoso Real Estate.
+## 11. Tests Execution
+
+One last thing - what happens when you run the test? Let's go back to running a single test:
+
+```bash
+# List files before we run test
+$ ls
+LICENSE  README.md  e2e  node_modules  package-lock.json  package.json  playwright.config.ts
+
+# Let's run the `7-todo-demo.spec.ts` test
+# This is the signature Playwright-create ToDo MVC app demo test
+Running 24 tests using 3 workers
+  24 passed (6.8s)
+To open last HTML report run:
+  npx playwright show-report e2e-reports
+
+# First, let's see the list of files again
+LICENSE  README.md  e2e e2e-reports  node_modules  package-lock.json  package.json  playwright.config.ts  test-results
+```
+
+Interesting. We have 2 folders created. Let's see what those are:
+ - `e2e-reports`  - is the folder configured for the HTML reporter output
+ - `test-results` - is the [default folder](https://playwright.dev/docs/api/class-testproject#test-project-output-dir) for files created during run
+
+You can reconfigure the latter location using the `outputDir` configuration property. But let's take the console output advice and see what the report shows:
+
+```bash
+$  npx playwright show-report e2e-reports
+
+Serving HTML report at http://localhost:9323. Press Ctrl+C to quit.
+```
+
+Two interesting things happen as a result. 
+
+First, if you were running in a Dev Container (in GitHub Codespaces or with Docker Desktop), you will see a pop-up asking you if you want to open this in a browser, or preview it in editor. _Note the link to see all forwarded ports_.
+
+![Forwarding ports](./assets/DevContainer-Reporter-Popup.png)
+
+What's that about? From the [Playwright Docs](https://playwright.dev/docs/test-ui-mode#docker--github-codespaces) we see that GitHub Codespaces automatically [forwards ports if the URL is printed to console](https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace?tool=vscode). Since the reporter console log mentions the URL, the port is automatically forwarded - and we get to view it in a browser in our host device (outside dev container) or in a preview tab within it. Let's pick browser. We get this.
+
+![Browser report](./assets/Browser-Reporter-Home.png)
+
+This is the HTML Reporter view. Note that if you don't specify reporter type in your configuration, the [default](https://playwright.dev/docs/test-reporters#list-reporter) is Dot reporter on CI/CD and List reporter everywhere else. This report gives you the top-level summary, but also lets you drill down into the details of each run - from execution time to specific actions run, and even trace diagrams and screenshots, if activated.
+
+
+## 12. Using Visual Studio Code Extension
+
+The Codespaces comes with Visual Studio Code extension pre-installed, thanks to our `devcontainer.json` configuration. Look on the activity bar (left sidebar) for a beaker symbol (for Testing). Clicking that will give this view.
+
+![VS Code Setup](./assets/VSCode-Test-Execution.png)
+
+Note that the drop down lets us pick from all available Playwright configurations in this codespace, and run all the tests at once, or pick subset (from the list at left) and run them. Note how this opens a `Test Results` tab where you can now view the streaming results of the test execution.
+
+![VS Code Execution](./assets/VSCode-Test-Results.png)
+
+But .. wouldn't it be cool if we could actually run these tests _interactively_ and see or step through results as though we were _Time Traveling_? Well, we can - with [UI Mode](https://playwright.dev/docs/test-ui-mode). 
+
+Since we are in Codespaces, we need to start it with [a slightly modified command](https://playwright.dev/docs/test-ui-mode#docker--github-codespaces)
+
+```bash
+$ npx playwright test --ui-host=0.0.0.0$
+```
+This will popup a dialog asking if you want to open this in a new tab.
+![VS Code UI Mode start](./assets/VSCode-UIMode-Popup.png)
+
+Click that - and you get yourself a _Time Travel_ interactive version where you can click to run tests just as before - but now you get a waterfall timeline with screenshots and performance metrics to help debug visually.
+![VS Code UI Mode time](./assets/VSCode-UIMode-TimeTravel.png)
+
+Playwright has a lot more powerful tooling for [debug](https://playwright.dev/docs/debug), [code generation](https://playwright.dev/docs/codegen-intro) and more. We'll look at all of those in the next segment, where we start building our Contoso tests from scratch!
+
+## Congratulations! 🥳
+We made it through this crash course on Playwright Test Specification writing. Now let's write the tests for Contoso Real Estate.
